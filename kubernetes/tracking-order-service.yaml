@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-tracking-service
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: order-tracking-service
+
+  template:
+    metadata:
+      labels:
+        app: order-tracking-service
+
+    spec:
+      imagePullSecrets:
+        - name: aws-registry-key
+
+      containers:
+        - name: order-tracking-service
+
+          image: 992382799498.dkr.ecr.us-east-1.amazonaws.com/dev/order-tracking-service:latest
+
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 3000
+
+          env:
+            - name: NODE_ENV
+              value: "production"
+
+            - name: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD
+              value: "1"
+
+            - name: PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+              value: "/usr/bin/chromium"
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-tracking-service
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: order-tracking-service
+
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
