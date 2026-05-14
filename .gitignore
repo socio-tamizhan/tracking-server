@@ -1,0 +1,17 @@
+# Build output
+dist/
+
+# Dependencies
+node_modules/
+
+# Environment — never commit real credentials
+.env
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# Claude Code local settings (personal, not project-wide)
+.claude/settings.local.json
