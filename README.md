@@ -27,7 +27,44 @@ All couriers work out-of-the-box without any credentials. Optional API keys unlo
 
 ---
 
-## Quick Start
+## Running with Docker
+
+The easiest way to get started — no Node.js installation needed.
+
+### 1. Build the image
+
+```bash
+docker build -t courier-tracking-api .
+```
+
+### 2. Run
+
+```bash
+docker run -p 3000:3000 courier-tracking-api
+```
+
+With optional API keys:
+
+```bash
+docker run -p 3000:3000 \
+  -e FEDEX_CLIENT_ID=your_id \
+  -e FEDEX_CLIENT_SECRET=your_secret \
+  -e DHL_CLIENT_ID=your_id \
+  -e DHL_CLIENT_SECRET=your_secret \
+  courier-tracking-api
+```
+
+Or pass a `.env` file:
+
+```bash
+docker run -p 3000:3000 --env-file .env courier-tracking-api
+```
+
+Open **http://localhost:3000/docs** once the container starts.
+
+---
+
+## Quick Start (without Docker)
 
 ### 1. Prerequisites
 
